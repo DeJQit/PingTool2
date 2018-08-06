@@ -53,36 +53,15 @@ ApplicationWindow {
         }
     }
 
-    Drawer {
+    DrawerItem {
         id: drawer
         width: window.width * 0.66
         height: window.height
-
-        Column {
-            anchors.fill: parent
-
-            ItemDelegate {
-                text: qsTr("Page 1")
-                width: parent.width
-                onClicked: {
-                    stackView.push("Page1Form.ui.qml")
-                    drawer.close()
-                }
-            }
-            ItemDelegate {
-                text: qsTr("Page 2")
-                width: parent.width
-                onClicked: {
-                    stackView.push("Page2Form.ui.qml")
-                    drawer.close()
-                }
-            }
-        }
     }
 
     StackView {
         id: stackView
-        initialItem: "HomeForm.ui.qml"
+        initialItem: "PingForm.qml"
         anchors.fill: parent
     }
 }

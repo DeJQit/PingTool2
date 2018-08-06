@@ -5,5 +5,8 @@
         <file>Page1Form.ui.qml</file>
         <file>Page2Form.ui.qml</file>
         <file>qtquickcontrols2.conf</file>
+        <file>PingForm.qml</file>
+        <file>DrawerModel.qml</file>
+        <file>DrawerItem.qml</file>
     </qresource>
 </RCC>

@@ -28,6 +28,8 @@ Project {
         files: [
             "main.cpp",
             "qml.qrc",
+            "sprocess.cpp",
+            "sprocess.h",
         ]
 
         Group {     // Properties for the produced executable
