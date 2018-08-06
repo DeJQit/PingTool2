@@ -12,7 +12,7 @@ Drawer {
         anchors.fill: parent
         model: drawerModel
         delegate: ItemDelegate {
-            text: title
+            text: model.title
             width: parent.width
             onClicked: {
                 stackView.push(model.source)
