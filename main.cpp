@@ -7,6 +7,12 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
+    QCoreApplication::setApplicationName("PingTool2");
+    QCoreApplication::setApplicationVersion("0.0.1");
+
+    QCoreApplication::setOrganizationName("MedveSoft");
+    QCoreApplication::setOrganizationDomain("org.dejqit");
+
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<SProcess>("SProcess", 1, 0, "SProcess");
