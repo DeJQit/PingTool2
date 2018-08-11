@@ -8,60 +8,27 @@ SwipeDelegate {
     property string hostname: ""
     property string username: ""
 
-    signal itemRemoved
+    property alias isRunning: process.isRunning
+
+    signal killProcess
 
     text: username + " (" + hostname + ") \n" + process.lastReadAll
 
     SProcess {
         id: process
         property string lastReadAll
+        property bool isRunning: false
+
         onReadyRead: lastReadAll = readAll();
 
-        onStarted: console.log("Ping Strinted")
-        onFinished: console.log("Ping Finished")
+        onStarted: {console.log("Ping Strinted", hostname, "::", username); isRunning = true;}
+        onFinished: {console.log("Ping Finished", hostname, "::", username); isRunning = false;}
     }
 
-
-    swipe.right: Row {
-          anchors.right: parent.right
-          height: parent.height
-          visible: swipe.complete
-
-          Label {
-              id: moveLabel
-              text: qsTr("Move")
-              color: "white"
-              verticalAlignment: Label.AlignVCenter
-              padding: 12
-              height: parent.height
-
-              SwipeDelegate.onClicked: swipe.close()
-
-              background: Rectangle {
-                  color: moveLabel.SwipeDelegate.pressed ? Qt.darker("#ffbf47", 1.1) : "#ffbf47"
-              }
-          }
-          Label {
-              id: deleteLabel
-              text: qsTr("Delete")
-              color: "white"
-              verticalAlignment: Label.AlignVCenter
-              padding: 12
-              height: parent.height
-
-              SwipeDelegate.onClicked: itemRemoved();
-
-              background: Rectangle {
-                  color: deleteLabel.SwipeDelegate.pressed ? Qt.darker("tomato", 1.1) : "tomato"
-              }
-          }
-    }
-
-    onClicked: swipe.complete ? swipe.close() : console.log("Click")
-    onDoubleClicked: swipe.open(SwipeDelegate.Right)
+    onDoubleClicked: if(! swipe.complete) swipe.open(SwipeDelegate.Right);
 
     Component.onCompleted: process.start("ping", [ hostname ]);
-    Component.onDestruction: process.kill();
+    onKillProcess: {console.log("Ping stop"); process.kill();}
 }
 
 
