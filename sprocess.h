@@ -13,9 +13,11 @@ public:
 public slots:
     void start(const QString &program, const QVariantList &arguments);
 
-    void kill();
-
     QByteArray readAll();
+
+    QByteArray readAllStandardOutput();
+
+    QByteArray readAllStandardError();
 };
 
 #endif // SPROCESS_H

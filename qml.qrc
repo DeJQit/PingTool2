@@ -6,5 +6,6 @@
         <file>DrawerModel.qml</file>
         <file>DrawerItem.qml</file>
         <file>AboutForm.qml</file>
+        <file>PingDelegate.qml</file>
     </qresource>
 </RCC>

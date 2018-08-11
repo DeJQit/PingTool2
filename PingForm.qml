@@ -16,63 +16,33 @@ Page {
 
     title: qsTr("Ping")
 
-    SwipeDelegate {
-        id: text
-        anchors.centerIn: parent
-        width: parent.width
-        onClicked: swipe.complete ? swipe.close() : console.log("Click")
-        onDoubleClicked: swipe.open(SwipeDelegate.Right)
-
-        swipe.right: Row {
-              anchors.right: parent.right
-              height: parent.height
-              visible: swipe.complete
-
-              Label {
-                  id: moveLabel
-                  text: qsTr("Move")
-                  color: "white"
-                  verticalAlignment: Label.AlignVCenter
-                  padding: 12
-                  height: parent.height
-
-                  SwipeDelegate.onClicked: swipe.close()
-
-                  background: Rectangle {
-                      color: moveLabel.SwipeDelegate.pressed ? Qt.darker("#ffbf47", 1.1) : "#ffbf47"
-                  }
-              }
-              Label {
-                  id: deleteLabel
-                  text: qsTr("Delete")
-                  color: "white"
-                  verticalAlignment: Label.AlignVCenter
-                  padding: 12
-                  height: parent.height
-
-                  SwipeDelegate.onClicked: console.log("Deleting...")
-
-                  background: Rectangle {
-                      color: deleteLabel.SwipeDelegate.pressed ? Qt.darker("tomato", 1.1) : "tomato"
-                  }
-              }
+    ListModel {
+        id: pingModel
+        ListElement {
+            hostname: "google.com"
+            username: "Google"
         }
+        ListElement {
+            hostname: "ya.ru"
+            username: "Yandex"
+        }
+        ListElement {
+            hostname: "yahoo.com"
+            username: "yahoo"
+        }
+
     }
 
-    SProcess {
-        id: process
-        onReadyRead: text.text = "Localhost\n" + readAll();
+    ListView {
+        anchors.fill: parent
+        model: pingModel
+        delegate: PingDelegate {
+            width: parent.width
+            hostname: model.hostname
+            username: model.username
+
+            onItemRemoved: pingModel.remove(id)
+        }
+        ScrollBar.vertical: ScrollBar {}
     }
-
-//    Timer {
-//        interval: 1000
-//        repeat: false
-//        triggeredOnStart: true
-//        running: true
-//        onTriggered: process.start("ping", [ "google.com" ]);
-//    }
-
-    Component.onCompleted: process.start("ping", [ "localhost" ]);
-    Component.onDestruction: process.kill();
-
 }
