@@ -8,6 +8,9 @@ ApplicationWindow {
     height: 480
     title: qsTr("PingTool II")
 
+    minimumWidth: 200
+    minimumHeight: 200
+
     Shortcut {
         sequence: StandardKey.Quit
         onActivated: window.close()
