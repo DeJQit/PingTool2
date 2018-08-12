@@ -45,6 +45,7 @@ ApplicationWindow {
 
         ToolButton {
             anchors.right: parent.right
+            text: "\uFE19"
             visible: stackView.currentItem.menu !== undefined
 
             ToolTip.text: stackView.currentItem.menu !== undefined ? stackView.currentItem.menu.title  : ""
