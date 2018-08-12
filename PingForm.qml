@@ -44,17 +44,6 @@ Page {
             hostname: model.hostname
             username: model.username
 
-            ListView.onRemove: SequentialAnimation {
-                PropertyAction { target: pingDelegate; property: "ListView.delayRemove"; value: true }
-                ScriptAction {script: killProcess();}
-                NumberAnimation {target: pingDelegate; property: "scale"; to: 0; duration: 250; easing.type: Easing.InOutQuad }
-                PropertyAction { target: pingDelegate; property: "ListView.delayRemove"; value: false }
-            }
-
-            ListView.onIsCurrentItemChanged: if(!ListView.isCurrentItem) swipe.close();
-
-            onClicked: { listView.currentIndex = index; if(swipe.complete) swipe.close(); }
-
             swipe.right: Button {
                 anchors.right: parent.right
                 height: parent.height
@@ -65,8 +54,10 @@ Page {
                     pingModel.remove(index);
                 }
                 highlighted: true
-                Material.accent: Material.Red
             }
+
+            onClicked: { ListView.view.currentIndex = index; }
+
         }
         displaced: Transition {
             NumberAnimation { properties: "x,y"; duration: 500 }
