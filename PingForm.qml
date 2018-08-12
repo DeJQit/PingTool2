@@ -31,7 +31,18 @@ Page {
             hostname: "yahoo.com"
             username: "yahoo"
         }
-
+        ListElement {
+            hostname: "wikipedia.org"
+            username: "wiki"
+        }
+        ListElement {
+            hostname: "pikabu.ru"
+            username: "pikabu"
+        }
+        ListElement {
+            hostname: "error"
+            username: "error"
+        }
     }
 
     ListView {

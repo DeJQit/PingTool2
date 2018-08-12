@@ -9,24 +9,19 @@ SwipeDelegate {
     property string hostname: ""
     property string username: ""
 
-    property alias isRunning: process.isRunning
-
     signal killProcess
 
     anchors { left: parent.left; right: parent.right }
 
     SProcess {
         id: process
-        property string lastReadAll
-        property bool isRunning: false
+        property string lastString
 
-        onReadyRead: lastReadAll = readAll();
-
-        onStarted: {console.log("Ping Strinted", hostname, "::", username); isRunning = true;}
-        onFinished: {console.log("Ping Finished", hostname, "::", username); isRunning = false;}
+        onReadyReadStandardOutput: lastString = String(readAllStandardOutput()).trim()
+        onReadyReadStandardError:  lastString = qsTr("Error: ") + String(readAllStandardError()).trim()
     }
 
-    text: username + " (" + hostname + ") \n" + process.lastReadAll
+    text: username + " (" + hostname + ") \n" + process.lastString
 
     contentItem: Text {
              text: rootItem.text
