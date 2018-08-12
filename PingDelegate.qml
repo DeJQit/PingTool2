@@ -10,6 +10,7 @@ SwipeDelegate {
     property string username: ""
 
     signal killProcess
+    signal startProcess
 
     anchors { left: parent.left; right: parent.right }
 
@@ -23,15 +24,20 @@ SwipeDelegate {
         onFinished: lastString += qsTr("(Ping finished)")
     }
 
-    text: username + " (" + hostname + ") \n" + process.lastString
+    contentItem: Column {
 
-    contentItem: Text {
-             text: rootItem.text
-             font: rootItem.font
-             color: Material.foreground
-             wrapMode: Text.WordWrap
-             verticalAlignment: Text.AlignVCenter
-         }
+        Label {
+            width: rootItem.width
+            text: username + " (" + hostname + ")"
+            wrapMode: Label.Wrap
+        }
+
+        Label {
+            width: rootItem.width
+            text: process.lastString
+            wrapMode: Label.Wrap
+        }
+    }
 
     ListView.onRemove: SequentialAnimation {
         PropertyAction { target: pingDelegate; property: "ListView.delayRemove"; value: true }
@@ -40,8 +46,17 @@ SwipeDelegate {
         PropertyAction { target: pingDelegate; property: "ListView.delayRemove"; value: false }
     }
 
-    Component.onCompleted: process.start("ping", ["-O", hostname ]);
-    onKillProcess: {console.log("Ping stop"); process.kill();}
+    Component.onCompleted: startProcess();
+    onStartProcess: {
+        if(Qt.platform.os === "linux" || Qt.platform.os === "unix") {
+            process.start("ping", ["-O", hostname ]);
+        } else if(Qt.platform.os === "windows") {
+            process.start("ping", ["-t", hostname ]);
+        }
+    }
+    onKillProcess: {
+        process.kill();
+    }
 }
 
 
