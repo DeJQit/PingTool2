@@ -40,7 +40,7 @@ SwipeDelegate {
         PropertyAction { target: pingDelegate; property: "ListView.delayRemove"; value: false }
     }
 
-    Component.onCompleted: process.start("ping", [ hostname ]);
+    Component.onCompleted: process.start("ping", ["-O", hostname ]);
     onKillProcess: {console.log("Ping stop"); process.kill();}
 }
 
