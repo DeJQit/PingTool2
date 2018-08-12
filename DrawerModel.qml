@@ -6,7 +6,7 @@ ListModel {
         source: "AboutForm.qml"
     }
     ListElement {
-        title: qsTr("Page 2")
-        source: "Page2Form.ui.qml"
+        title: qsTr("Exit")
+        source: "ExitForm.qml"
     }
 }
