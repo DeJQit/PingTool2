@@ -19,6 +19,8 @@ SwipeDelegate {
 
         onReadyReadStandardOutput: lastString = String(readAllStandardOutput()).trim()
         onReadyReadStandardError:  lastString = qsTr("Error: ") + String(readAllStandardError()).trim()
+        onStarted: lastString = qsTr("Ping started ...")
+        onFinished: lastString += qsTr("(Ping finished)")
     }
 
     text: username + " (" + hostname + ") \n" + process.lastString
