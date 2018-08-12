@@ -13,7 +13,10 @@ Page {
             onClicked: addDeviceDialog.open()
         }
         MenuItem {
-            text: "Second"
+            id: menuDeleteAction
+            text: qsTr("Delete")
+            checkable: true
+            enabled: pingModel.count > 0
         }
     }
 
@@ -58,6 +61,7 @@ Page {
             username: model.username
 
             swipe.right: Button {
+                anchors.left: parent.left
                 anchors.right: parent.right
                 height: parent.height
                 visible: swipe.complete
@@ -69,7 +73,14 @@ Page {
                 highlighted: true
             }
 
-            onClicked: { ListView.view.currentIndex = index; }
+            onClicked: {
+                ListView.view.currentIndex = index;
+                if(menuDeleteAction.checked) {
+                    pingDelegate.swipe.open(SwipeDelegate.Right)
+                }
+            }
+
+            ListView.onCurrentItemChanged: if(!ListView.isCurrentItem && pingDelegate.swipe.complete) pingDelegate.swipe.close()
 
         }
         displaced: Transition {
@@ -110,6 +121,22 @@ Page {
                 pingModel.append({"hostname":hostname,"username":username});
             addDeviceDialogHostname.clear();
             addDeviceDialogUsername.clear();
+        }
+    }
+
+    footer: Button {
+        id: deleteHintButton
+        anchors.left: parent.left
+        anchors.right: parent.right
+        text: qsTr("Click item to delete")
+        visible: menuDeleteAction.checked
+        onClicked: { menuDeleteAction.checked = false; listView.currentIndex = -1}
+        states: State {
+            when: deleteHintButton.hovered
+            PropertyChanges {
+                target: deleteHintButton
+                text: qsTr("Done")
+            }
         }
     }
 }
