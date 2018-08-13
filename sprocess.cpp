@@ -28,7 +28,7 @@ void SProcess::start(const QString &program, const QVariantList &arguments)
 QByteArray SProcess::readAll()
 {
 #ifdef Q_OS_WIN32
-    QTextCodec *codec = QTextCodec::codecForName("Windows-1251");
+    QTextCodec *codec = QTextCodec::codecForName("IBM 866");
     return codec->toUnicode(QProcess::readAll()).toUtf8();
 #else
     return QProcess::readAll();
@@ -38,7 +38,7 @@ QByteArray SProcess::readAll()
 QByteArray SProcess::readAllStandardOutput()
 {
 #ifdef Q_OS_WIN32
-    QTextCodec *codec = QTextCodec::codecForName("Windows-1251");
+    QTextCodec *codec = QTextCodec::codecForName("IBM 866");
     return codec->toUnicode(QProcess::readAllStandardOutput()).toUtf8();
 #else
     return QProcess::readAllStandardOutput();
@@ -48,7 +48,7 @@ QByteArray SProcess::readAllStandardOutput()
 QByteArray SProcess::readAllStandardError()
 {
 #ifdef Q_OS_WIN32
-    QTextCodec *codec = QTextCodec::codecForName("Windows-1251");
+    QTextCodec *codec = QTextCodec::codecForName("IBM 866");
     return codec->toUnicode(QProcess::readAllStandardError()).toUtf8();
 #else
     return QProcess::readAllStandardError();
