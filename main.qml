@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
+import Qt.labs.settings 1.0
 
 ApplicationWindow {
     id: window
@@ -14,6 +15,14 @@ ApplicationWindow {
     Shortcut {
         sequence: StandardKey.Quit
         onActivated: window.close()
+    }
+
+    Settings {
+        category: "MainWindow"
+        property alias x: window.x
+        property alias y: window.y
+        property alias width: window.width
+        property alias height: window.height
     }
 
     header: ToolBar {
