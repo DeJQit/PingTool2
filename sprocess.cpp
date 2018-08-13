@@ -29,7 +29,7 @@ QByteArray SProcess::readAll()
 {
 #ifdef Q_OS_WIN32
     QTextCodec *codec = QTextCodec::codecForName("Windows-1251");
-    return codec->toUnicode(QProcess::readAllStandardOutput());
+    return codec->toUnicode(QProcess::readAll());
 #else
     return QProcess::readAll();
 #endif
@@ -49,7 +49,7 @@ QByteArray SProcess::readAllStandardError()
 {
 #ifdef Q_OS_WIN32
     QTextCodec *codec = QTextCodec::codecForName("Windows-1251");
-    return codec->toUnicode(QProcess::readAllStandardOutput());
+    return codec->toUnicode(QProcess::readAllStandardError());
 #else
     return QProcess::readAllStandardError();
 #endif
