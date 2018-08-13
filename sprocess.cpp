@@ -3,6 +3,10 @@
 #include <QVariant>
 #include <QtDebug>
 
+#ifdef Q_OS_WIN32
+#include <QTextCodec>
+#endif
+
 SProcess::SProcess(QObject *parent)
     : QProcess (parent)
 {
@@ -23,15 +27,30 @@ void SProcess::start(const QString &program, const QVariantList &arguments)
 
 QByteArray SProcess::readAll()
 {
+#ifdef Q_OS_WIN32
+    QTextCodec *codec = QTextCodec::codecForName("Windows-1251");
+    return codec->toUnicode(QProcess::readAllStandardOutput());
+#else
     return QProcess::readAll();
+#endif
 }
 
 QByteArray SProcess::readAllStandardOutput()
 {
+#ifdef Q_OS_WIN32
+    QTextCodec *codec = QTextCodec::codecForName("Windows-1251");
+    return codec->toUnicode(QProcess::readAllStandardOutput());
+#else
     return QProcess::readAllStandardOutput();
+#endif
 }
 
 QByteArray SProcess::readAllStandardError()
 {
+#ifdef Q_OS_WIN32
+    QTextCodec *codec = QTextCodec::codecForName("Windows-1251");
+    return codec->toUnicode(QProcess::readAllStandardOutput());
+#else
     return QProcess::readAllStandardError();
+#endif
 }
