@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QCoreApplication::setApplicationName("PingTool2");
-    QCoreApplication::setApplicationVersion("0.0.1");
+    QCoreApplication::setApplicationVersion("0.0.2");
 
     QCoreApplication::setOrganizationName("MedveSoft");
     QCoreApplication::setOrganizationDomain("org.dejqit");

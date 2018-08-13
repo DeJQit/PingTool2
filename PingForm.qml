@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.3
+import Qt.labs.settings 1.0
 import SProcess 1.0
 
 Page {
@@ -24,29 +25,25 @@ Page {
 
     ListModel {
         id: pingModel
-        ListElement {
-            hostname: "google.com"
-            username: "Google"
+    }
+
+    Settings {
+        category: "PingModel"
+        property string dataModel: "[]"
+        Component.onCompleted: {
+            var obj = JSON.parse(dataModel);
+            for(var item in obj) {
+                pingModel.append({"hostname":obj[item].hostname,"username":obj[item].username});
+            }
         }
-        ListElement {
-            hostname: "ya.ru"
-            username: "Yandex"
-        }
-        ListElement {
-            hostname: "yahoo.com"
-            username: "yahoo"
-        }
-        ListElement {
-            hostname: "wikipedia.org"
-            username: "wiki"
-        }
-        ListElement {
-            hostname: "pikabu.ru"
-            username: "pikabu"
-        }
-        ListElement {
-            hostname: "error"
-            username: "error"
+        Component.onDestruction: {
+            var obj = [];
+            var count = pingModel.count;
+            for(var i = 0; i < count; i ++) {
+                var item = pingModel.get(i);
+                obj.push({"hostname":item.hostname,"username":item.username});
+            }
+            dataModel = JSON.stringify(obj);
         }
     }
 
